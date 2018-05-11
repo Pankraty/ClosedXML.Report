@@ -256,7 +256,7 @@ namespace ClosedXML.Report.Excel
                 summRow.CopyStylesFrom(fr);
             }
 
-            summRow.Clear(XLClearOptions.Contents);
+            summRow.Clear(XLClearOptions.Contents | XLClearOptions.DataType);
             summRow.Cell(groupClmn).Value = _getGroupLabel != null ? _getGroupLabel(title) : title + " Итог";
             Sheet.Row(summRow.RowNumber()).OutlineLevel = level - 1;
 

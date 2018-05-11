@@ -77,7 +77,7 @@ namespace ClosedXML.Report.Tests
             fileExpected = Path.Combine(TestConstants.GaugesFolder, fileExpected);
             using (var expected = new XLWorkbook(fileExpected))
             {
-                actual.Worksheets.Count.ShouldBeEquivalentTo(expected.Worksheets.Count, "Count of worksheets must be equal");
+                actual.Worksheets.Count.ShouldBeEquivalentTo(expected.Worksheets.Count, $"Count of worksheets must be {expected.Worksheets.Count}");
 
                 for (int i = 0; i < actual.Worksheets.Count; i++)
                 {
@@ -94,10 +94,10 @@ namespace ClosedXML.Report.Tests
             if (expected.Name != actual.Name)
                 messages.Add("Worksheet names differ");
 
-            if (expected.RangeUsed().RangeAddress != actual.RangeUsed().RangeAddress)
+            if (expected.RangeUsed().RangeAddress.ToString() != actual.RangeUsed().RangeAddress.ToString())
                 messages.Add("Used ranges differ");
 
-            if (expected.Style != actual.Style)
+            if (expected.Style.ToString() != actual.Style.ToString())
                 messages.Add("Worksheet styles differ");
 
             foreach (var expectedCell in expected.CellsUsed())
@@ -105,7 +105,7 @@ namespace ClosedXML.Report.Tests
                 var actualCell = actual.Cell(expectedCell.Address);
                 bool cellsAreEqual = true;
 
-                if (actualCell.Value != expectedCell.Value)
+                if (actualCell.Value?.ToString() != expectedCell.Value?.ToString())
                 {
                     messages.Add($"Cell values are not equal starting from {actualCell.Address}");
                     cellsAreEqual = false;
@@ -123,7 +123,7 @@ namespace ClosedXML.Report.Tests
                     cellsAreEqual = false;
                 }
 
-                if (actualCell.Style != expectedCell.Style)
+                if (expectedCell.Style.ToString() != actualCell.Style.ToString())
                 {
                     messages.Add($"Cell style are not equal starting from {actualCell.Address}");
                     cellsAreEqual = false;
@@ -141,14 +141,14 @@ namespace ClosedXML.Report.Tests
                 var expectedCf = expected.ConditionalFormats.ElementAt(i);
                 var actualCf = actual.ConditionalFormats.ElementAt(i);
 
-                if (expectedCf.Range.RangeAddress != actualCf.Range.RangeAddress)
+                if (expectedCf.Range.RangeAddress.ToString() != actualCf.Range.RangeAddress.ToString())
                     messages.Add($"Conditional formats at index {i} have different ranges");
 
-                if (expectedCf.Style != actualCf.Style)
+                if (expectedCf.Style.ToString() != actualCf.Style.ToString())
                     messages.Add($"Conditional formats at index {i} have different styles");
             }
 
-            return messages.Any();
+            return !messages.Any();
         }
     }
 }
