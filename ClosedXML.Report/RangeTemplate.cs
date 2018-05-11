@@ -80,6 +80,7 @@ namespace ClosedXML.Report
             }
 
             result._mergedRanges = sheet.MergedRanges.Where(x => prng.Contains(x) && !innerRanges.Any(nr=>nr.Ranges.Any(r=>r.Contains(x)))).ToArray();
+            sheet.MergedRanges.RemoveAll(result._mergedRanges.Contains);
             result._condFormats = sheet.ConditionalFormats
                 .Where(f => prng.Contains(f.Range) && !innerRanges.Any(ir => ir.Ranges.Contains(f.Range)))
                 .ToArray();
@@ -231,7 +232,7 @@ namespace ClosedXML.Report
                     }
                     _buff.AddConditionalFormats(_totalsCondFormats, _optionsRow, optionsRow);
                 }
-                //_rangeTags.Execute(new ProcessingContext(resultRange, new DataSource(items)));
+                _rangeTags.Execute(new ProcessingContext(resultRange, new DataSource(items)));
             }
         }
 

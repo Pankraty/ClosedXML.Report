@@ -67,7 +67,7 @@ namespace ClosedXML.Report.Tests
                 },
                 wb =>
                 {
-                    wb.SaveAs("GroupTagTests_WithHeader.xlsx");
+                    //wb.SaveAs("GroupTagTests_WithHeader.xlsx");
                     CompareWithGauge(wb, "GroupTagTests_WithHeader.xlsx");
                 });
         }

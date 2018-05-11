@@ -252,7 +252,7 @@ namespace ClosedXML.Report.Excel
                 frmtRng = frmtRng.Offset(0, 0, toRange.RangeAddress.RowCount(), frmtRng.ColumnCount()).Unsubscribed();
             var newFrmt = frmtRng.AddConditionalFormat();
             newFrmt.CopyFrom(format);
-
+            /*
             var source = format.Range.FirstCell();
             var target = frmtRng.FirstCell();
             foreach (var v in newFrmt.Values.ToList())
@@ -265,7 +265,7 @@ namespace ClosedXML.Report.Excel
                 }
 
                 newFrmt.Values[v.Key] = new XLFormula((v.Value.IsFormula ? "=" : "") + f);
-            }
+            }*/
         }
 
         internal static void CopyConditionalFormatsFrom(this IXLRangeBase targetRange, IXLRangeBase srcRange)

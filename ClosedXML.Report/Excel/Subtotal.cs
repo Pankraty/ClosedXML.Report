@@ -149,10 +149,11 @@ namespace ClosedXML.Report.Excel
             {
                 if (row.IsSummary())
                 {
-                    Sheet.Row(row.RowNumber()).Delete();
-                    row = row.Unsubscribed().RowAbove();
+                    var rowNumber = row.RowNumber();
+                    Sheet.Row(rowNumber).Delete();
+                    row = _range.Row(rowNumber - 1);
                 }
-                row = row.Unsubscribed().RowBelow();
+                row = row.RowBelow();
             }
             row.Dispose();
         }
