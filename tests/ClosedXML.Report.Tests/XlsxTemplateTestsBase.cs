@@ -133,6 +133,22 @@ namespace ClosedXML.Report.Tests
                     break; // we don't need thousands of messages
             }
 
+            if (expected.MergedRanges.Count() != actual.MergedRanges.Count())
+                messages.Add("Merged ranges counts differ");
+            else
+            {
+                for (int i = 0; i < expected.MergedRanges.Count(); i++)
+                {
+                    var expectedMr = expected.MergedRanges.ElementAt(i);
+                    var actualMr = actual.MergedRanges.ElementAt(i);
+                    if (expectedMr.RangeAddress.ToString() != actualMr.RangeAddress.ToString())
+                    {
+                        messages.Add($"Merged ranges differ starting from {expectedMr.RangeAddress}");
+                        break;
+                    }
+                }
+            }
+
             if (expected.ConditionalFormats.Count() != actual.ConditionalFormats.Count())
                 messages.Add("Conditional format counts differ");
 
