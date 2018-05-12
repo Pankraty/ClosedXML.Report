@@ -111,7 +111,7 @@ namespace ClosedXML.Report.Tests
                     cellsAreEqual = false;
                 }
 
-                if (actualCell.FormulaA1 != expectedCell.FormulaA1)
+                if (!string.Equals(actualCell.FormulaA1, expectedCell.FormulaA1, StringComparison.InvariantCultureIgnoreCase))
                 {
                     messages.Add($"Cell formulae are not equal starting from {actualCell.Address}");
                     cellsAreEqual = false;
@@ -137,10 +137,18 @@ namespace ClosedXML.Report.Tests
                 messages.Add("Merged ranges counts differ");
             else
             {
-                for (int i = 0; i < expected.MergedRanges.Count(); i++)
+                var expectedRanges = expected.MergedRanges
+                    .OrderBy(r => r.RangeAddress.FirstAddress.ColumnNumber)
+                    .ThenBy(r => r.RangeAddress.FirstAddress.RowNumber)
+                    .ToList();
+                var actualRanges = actual.MergedRanges
+                    .OrderBy(r => r.RangeAddress.FirstAddress.ColumnNumber)
+                    .ThenBy(r => r.RangeAddress.FirstAddress.RowNumber)
+                    .ToList();
+                for (int i = 0; i < expectedRanges.Count(); i++)
                 {
-                    var expectedMr = expected.MergedRanges.ElementAt(i);
-                    var actualMr = actual.MergedRanges.ElementAt(i);
+                    var expectedMr = expectedRanges.ElementAt(i);
+                    var actualMr = actualRanges.ElementAt(i);
                     if (expectedMr.RangeAddress.ToString() != actualMr.RangeAddress.ToString())
                     {
                         messages.Add($"Merged ranges differ starting from {expectedMr.RangeAddress}");
