@@ -32,7 +32,7 @@ namespace ClosedXML.Report.Tests
                 },
                 wb =>
                 {
-                    //wb.SaveAs("GroupTagTests_Simple.xlsx");
+                    wb.SaveAs("GroupTagTests_Simple.xlsx");
                     CompareWithGauge(wb, "GroupTagTests_Simple.xlsx");
                 });
         }
@@ -51,6 +51,8 @@ namespace ClosedXML.Report.Tests
                 },
                 wb =>
                 {
+                    using (var ms = new MemoryStream())
+                        wb.SaveAs(ms); // as conditional formats are consolidated on saving
                     //wb.SaveAs("GroupTagTests_Collapse.xlsx");
                     CompareWithGauge(wb, "GroupTagTests_Collapse.xlsx");
                 });
@@ -86,6 +88,8 @@ namespace ClosedXML.Report.Tests
                 },
                 wb =>
                 {
+                    using (var ms = new MemoryStream())
+                        wb.SaveAs(ms); // as conditional formats are consolidated on saving
                     //wb.SaveAs("tLists2_sum.xlsx");
                     CompareWithGauge(wb, "tLists2_sum.xlsx");
                 });
