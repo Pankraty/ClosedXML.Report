@@ -150,8 +150,8 @@ namespace ClosedXML.Report.Excel
                 if (row.IsSummary())
                 {
                     var rowNumber = row.RowNumber();
+                    row = row.RowAbove();
                     Sheet.Row(rowNumber).Delete();
-                    row = _range.Row(rowNumber - 1);
                 }
                 row = row.RowBelow();
             }
